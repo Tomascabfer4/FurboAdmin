@@ -1,73 +1,94 @@
-# React + TypeScript + Vite
+# ⚽👑 Furbo Admin Panel
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> **El CMS definitivo para gestionar Furbo Vacano.**
+> Administra tus canales, listas y aplicaciones de forma visual sin tocar una sola línea de código JSON.
 
-Currently, two official plugins are available:
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-B73C98?style=for-the-badge&logo=vite&logoColor=white)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## 📋 Descripción
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+**Furbo Admin** es una aplicación web diseñada para actuar como "backend" de la aplicación de TV **Furbo Vacano**.
 
-## Expanding the ESLint configuration
+Se conecta directamente a la API de GitHub para leer y escribir en el archivo `furbo-data.json`. Esto permite actualizar los enlaces de fútbol, añadir nuevas APPs o cambiar listas Acestream desde el móvil o el PC, reflejándose los cambios casi al instante en todos los dispositivos TV Box.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## ✨ Características
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+* **🛡️ Serverless:** No requiere base de datos ni servidor propio. Usa GitHub como backend.
+* **⚡ Edición en Tiempo Real:** Lee, edita y guarda cambios directamente en tu repositorio.
+* **🎨 Interfaz Intuitiva:** Formularios claros para Canales Web, Listas Acestream, Apps y VPNs.
+* **🔒 Seguro:** Acceso mediante Personal Access Token (PAT) de GitHub.
+* **📱 Responsive:** Gestiona tu contenido desde el ordenador o el móvil.
+* **🌙 Dark Mode:** Diseño oscuro elegante con Tailwind CSS.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## 🚀 Instalación y Desarrollo Local
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Sigue estos pasos para ejecutar el panel en tu ordenador:
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+1.  **Clonar el repositorio:**
+    ```bash
+    git clone [https://github.com/Tomascabfer4/furbo-admin.git](https://github.com/Tomascabfer4/furbo-admin.git)
+    cd furbo-admin
+    ```
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+2.  **Instalar dependencias:**
+    ```bash
+    npm install
+    ```
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+3.  **Configurar constantes:**
+    Abre `src/App.tsx` y asegúrate de que estas constantes apuntan a tu repositorio de la App de TV:
+    ```typescript
+    const GITHUB_OWNER = "Tomascabfer4";
+    const GITHUB_REPO = "FurboVacano"; // El nombre del repo de la App
+    const FILE_PATH = "furbo-data.json";
+    ```
+
+4.  **Iniciar el servidor de desarrollo:**
+    ```bash
+    npm run dev
+    ```
+
+## 🔑 Configuración del Token de GitHub
+
+Para que la web pueda guardar cambios, necesitas una "llave" de acceso.
+
+1.  Ve a [GitHub Settings > Developer Settings > Personal Access Tokens (Classic)](https://github.com/settings/tokens).
+2.  Haz clic en **Generate new token (classic)**.
+3.  **Nombre:** `FurboAdmin`.
+4.  **Scopes (Permisos):** Marca la casilla **`repo`** (esto da control total sobre tus repos privados/públicos para poder editar el archivo).
+5.  Copia el token que empieza por `ghp_...`.
+6.  Al abrir **Furbo Admin**, pega este token en la pantalla de inicio.
+
+> **Nota:** El token se guarda en el `localStorage` de tu navegador para que no tengas que escribirlo cada vez.
+
+## 📦 Despliegue (Gratis)
+
+Puedes subir esta web a internet en 2 minutos usando **Vercel** o **Netlify**.
+
+1.  Sube este código a un repositorio de GitHub.
+2.  Entra en [Vercel](https://vercel.com).
+3.  Dale a **"Add New Project"** e importa tu repo `furbo-admin`.
+4.  Dale a **Deploy**.
+5.  ¡Listo! Ya tienes tu URL propia (ej: `furbo-admin.vercel.app`) para gestionar tu TV desde cualquier lugar.
+
+## 🛠️ Tecnologías Usadas
+
+* **Frontend:** React + Vite
+* **Lenguaje:** TypeScript
+* **Estilos:** Tailwind CSS + Lucide React (Iconos)
+* **API:** Octokit (GitHub SDK)
+
+## ⚠️ Aviso
+
+Esta herramienta modifica directamente archivos en tu repositorio.
+* Se recomienda hacer una copia de seguridad de tu `furbo-data.json` de vez en cuando.
+* Si borras un elemento en el Admin, se borra permanentemente del JSON al guardar.
+
+---
+
+Hecho con ❤️ y ⚽ por **Tomás Cabello Fernández**
